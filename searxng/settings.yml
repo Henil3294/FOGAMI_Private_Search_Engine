@@ -1,0 +1,75 @@
+﻿# SearXNG configuration file
+
+use_default_settings: true
+
+general:
+  debug: false
+  instance_name: "FOGAMI Search"
+  donation_url: false
+  contact_url: false
+  privacypolicy_url: false
+  enable_metrics: true
+
+search:
+  safe_search: 2 # 0: None, 1: Moderate, 2: Strict
+  autocomplete: "duckduckgo" # Autocomplete source
+  ban_time_on_fail: 5
+  max_fail: 3
+
+server:
+  # Binding address inside container
+  bind_address: "0.0.0.0"
+  port: 8080
+  secret_key: "REPLACE_WITH_YOUR_OWN_SECRET_KEY"  # generate with: openssl rand -hex 32
+  base_url: false
+  image_proxy: true
+  method: "GET" # Fixes back/forward browser navigation error (instead of POST)
+
+redis:
+  url: redis://redis:6379/0
+
+ui:
+  static_use_hash: true
+  default_locale: "en"
+  query_in_title: true
+  infinite_scroll: false
+  center_alignment: false
+  default_theme: simple
+  theme_args:
+    simple_style: auto # light, dark, auto
+
+outgoing:
+  request_timeout: 4.0
+  max_request_timeout: 10.0
+  pool_connections: 100
+  pool_maxsize: 20
+  enable_http2: true
+
+# Enabled engines tweaking
+engines:
+  - name: google
+    engine: google
+    shortcut: go
+    use_mobile_ui: false
+    timeout: 3.0
+  - name: duckduckgo
+    engine: duckduckgo
+    shortcut: ddg
+    timeout: 3.0
+  - name: bing
+    engine: bing
+    shortcut: bi
+    timeout: 3.0
+  - name: wikipedia
+    engine: wikipedia
+    shortcut: wp
+    timeout: 2.0
+  - name: github
+    engine: github
+    shortcut: gh
+    timeout: 3.0
+  - name: reddit
+    engine: reddit
+    shortcut: rd
+    timeout: 3.0
+

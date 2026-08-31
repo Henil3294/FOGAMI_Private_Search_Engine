@@ -1,0 +1,92 @@
+﻿services:
+  redis:
+    container_name: redis
+    image: valkey/valkey:8-alpine
+    command: valkey-server --save "" --appendonly "no"
+    restart: unless-stopped
+    networks:
+      - searxng
+    tmpfs:
+      - /var/lib/valkey
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+  searxng:
+    container_name: searxng
+    image: searxng/searxng:latest
+    restart: unless-stopped
+    networks:
+      - searxng
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./searxng:/etc/searxng:rw
+      # Cyber Emerald Background Wallpaper
+      - ./custom_branding/bg.jpg:/usr/local/searxng/searx/static/themes/simple/img/bg.jpg:ro
+      # Custom Theme CSS (Black metallic shards + Neon Green Accents & Glow)
+      - ./custom_branding/custom_theme.css:/usr/local/searxng/searx/static/themes/simple/css/custom_theme.css:ro
+      # Master Base Template with Fixed 100vw/100vh Background Layer
+      - ./custom_branding/base.html:/usr/local/searxng/searx/templates/simple/base.html:ro
+      # Homepage: Cyber Robot Mascot + Custom Template
+      - ./custom_branding/FOGAMI.svg:/usr/local/searxng/searx/static/themes/simple/img/searxng.svg:ro
+      - ./custom_branding/FOGAMI.svg:/usr/local/searxng/searx/static/themes/simple/img/searxng.png:ro
+      - ./custom_branding/FOGAMI.svg:/usr/local/searxng/searx/static/themes/simple/img/searxng.svg.gz:ro
+      - ./custom_branding/FOGAMI.svg:/usr/local/searxng/searx/static/themes/simple/img/searxng.svg.br:ro
+      - ./custom_branding/index.html:/usr/local/searxng/searx/templates/simple/index.html:ro
+      # Header / Preferences / Results: Text-Only Cyber Green "FOGAMI" Wordmark
+      - ./custom_branding/fogami-wordmark.svg:/usr/local/searxng/searx/static/themes/simple/img/fogami-wordmark.svg:ro
+      - ./custom_branding/page_with_header.html:/usr/local/searxng/searx/templates/simple/page_with_header.html:ro
+      - ./custom_branding/searxng-wordmark.min.svg:/usr/local/searxng/searx/templates/simple/searxng-wordmark.min.svg:ro
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8080/
+      - SEARXNG_SECRET=${SEARXNG_SECRET}
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+  caddy:
+    container_name: caddy
+    image: caddy:2-alpine
+    restart: unless-stopped
+    networks:
+      - searxng
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - searxng
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+networks:
+  searxng:
+    driver: bridge
+
+volumes:
+  caddy-data:
+  caddy-config:
+

@@ -1,0 +1,16 @@
+﻿{% extends "simple/base.html" %}
+{% from 'simple/icons.html' import icon_big %}
+
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="/static/themes/simple/css/custom_theme.css" type="text/css">
+{% endblock %}
+
+{% block content %}
+<div class="index">
+    <div class="title" style="margin-bottom: 2.2rem; text-align: center;">
+        <img src="/static/themes/simple/img/searxng.svg" alt="FOGAMI" style="max-height: 220px; width: auto; max-width: 320px; object-fit: contain; display: block; margin: 0 auto; filter: drop-shadow(0 0 25px rgba(0,255,135,0.45));">
+    </div>
+    {% include 'simple/simple_search.html' %}
+</div>
+{% endblock %}

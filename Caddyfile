@@ -1,0 +1,18 @@
+{
+	admin off
+}
+
+:80 {
+	log {
+		output stdout
+		format console
+	}
+
+	# Reverse proxy to SearXNG container
+	reverse_proxy searxng:8080 {
+		header_up Host {host}
+		header_up X-Real-IP {remote_host}
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Forwarded-Proto {scheme}
+	}
+}
