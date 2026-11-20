@@ -1,4 +1,4 @@
-﻿services:
+services:
   redis:
     container_name: redis
     image: valkey/valkey:8-alpine
@@ -30,22 +30,6 @@
       - "8080:8080"
     volumes:
       - ./searxng:/etc/searxng:rw
-      # Cyber Emerald Background Wallpaper
-      - ./custom_branding/bg.jpg:/usr/local/searxng/searx/static/themes/simple/img/bg.jpg:ro
-      # Custom Theme CSS (Black metallic shards + Neon Green Accents & Glow)
-      - ./custom_branding/custom_theme.css:/usr/local/searxng/searx/static/themes/simple/css/custom_theme.css:ro
-      # Master Base Template with Fixed 100vw/100vh Background Layer
-      - ./custom_branding/base.html:/usr/local/searxng/searx/templates/simple/base.html:ro
-      # Homepage: Cyber Robot Mascot + Custom Template
-      - ./custom_branding/FOGAMI.svg:/usr/local/searxng/searx/static/themes/simple/img/searxng.svg:ro
-      - ./custom_branding/FOGAMI.svg:/usr/local/searxng/searx/static/themes/simple/img/searxng.png:ro
-      - ./custom_branding/FOGAMI.svg:/usr/local/searxng/searx/static/themes/simple/img/searxng.svg.gz:ro
-      - ./custom_branding/FOGAMI.svg:/usr/local/searxng/searx/static/themes/simple/img/searxng.svg.br:ro
-      - ./custom_branding/index.html:/usr/local/searxng/searx/templates/simple/index.html:ro
-      # Header / Preferences / Results: Text-Only Cyber Green "FOGAMI" Wordmark
-      - ./custom_branding/fogami-wordmark.svg:/usr/local/searxng/searx/static/themes/simple/img/fogami-wordmark.svg:ro
-      - ./custom_branding/page_with_header.html:/usr/local/searxng/searx/templates/simple/page_with_header.html:ro
-      - ./custom_branding/searxng-wordmark.min.svg:/usr/local/searxng/searx/templates/simple/searxng-wordmark.min.svg:ro
     environment:
       - SEARXNG_BASE_URL=http://localhost:8080/
       - SEARXNG_SECRET=${SEARXNG_SECRET}
