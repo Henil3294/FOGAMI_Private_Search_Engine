@@ -2,6 +2,10 @@
 
 A self-hosted, privacy-respecting metasearch engine powered by **SearXNG**. FOGAMI aggregates results from multiple search engines without tracking or profiling users.
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b86c45d7-ac72-491e-a02d-75a85156883a" alt="FOGAMI Search Interface" width="90%" />
+</p>
+
 ---
 
 ## ✨ Features
