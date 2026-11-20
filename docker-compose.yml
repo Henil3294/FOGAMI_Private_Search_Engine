@@ -30,6 +30,7 @@ services:
       - "8080:8080"
     volumes:
       - ./searxng:/etc/searxng:rw
+      - ./fogami-logo.svg:/usr/local/searxng/searx/static/themes/simple/img/searxng.svg:ro
     environment:
       - SEARXNG_BASE_URL=http://localhost:8080/
       - SEARXNG_SECRET=${SEARXNG_SECRET}
